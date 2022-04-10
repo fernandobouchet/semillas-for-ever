@@ -15,7 +15,7 @@ abstract class Planta(open var altura: Double, open val anioObtencion: Int) {
     abstract fun espacio(): Double
 }
 
-class Menta(altura: Double, anioObtencion: Int) : Planta(altura, anioObtencion) {
+open class Menta(altura: Double, anioObtencion: Int) : Planta(altura, anioObtencion) {
 
     override fun daNuevasSemillas(): Boolean {
         return super.daNuevasSemillas() || this.altura > 0.4
@@ -26,7 +26,7 @@ class Menta(altura: Double, anioObtencion: Int) : Planta(altura, anioObtencion) 
     }
 }
 
-class Soja(altura: Double, anioObtencion: Int) : Planta(altura, anioObtencion) {
+open class Soja(altura: Double, anioObtencion: Int) : Planta(altura, anioObtencion) {
 
     override var horasDeSolQueTolera = when {
         this.altura  < 0.5 -> 6
@@ -40,5 +40,28 @@ class Soja(altura: Double, anioObtencion: Int) : Planta(altura, anioObtencion) {
 
     override fun espacio(): Double {
         return this.altura / 2
+    }
+
+}
+
+class Quinoa(altura: Double, anioObtencion: Int, var espacio: Double): Planta(altura, anioObtencion) {
+    override fun espacio(): Double {
+        return espacio
+    }
+
+    override var horasDeSolQueTolera: Int = when {
+        this.espacio() < 0.3 -> 10
+        else -> super.horasDeSolQueTolera
+    }
+}
+
+class SojaTransgenica(altura: Double, anioObtencion: Int): Soja(altura, anioObtencion) {
+    override fun daNuevasSemillas(): Boolean {
+        return false
+    }
+}
+class Peperina(altura: Double, anioObtencion: Int): Menta(altura, anioObtencion) {
+    override fun espacio(): Double {
+        return super.espacio() * 2
     }
 }
