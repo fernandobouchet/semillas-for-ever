@@ -1,37 +1,44 @@
 package ar.edu.unahur.obj2.semillas
 
-class Menta(var altura: Double, val anioSemilla: Int) {
-    fun espacio(): Double {
-        TODO("Te la debo, amigue...")
+abstract class Planta(open var altura: Double, open val anioObtencion: Int) {
+
+    open var horasDeSolQueTolera = 7
+
+    open fun esFuerte(): Boolean {
+       return horasDeSolQueTolera > 9
     }
 
-    fun daSemillas(): Boolean {
-        TODO("Colgue, che...")
+    open fun daNuevasSemillas(): Boolean {
+        return this.esFuerte()
     }
 
-    fun esFuerte(): Boolean {
-        TODO("Estas seguro que lo queres implementar así?")
-    }
-
+    abstract fun espacio(): Double
 }
 
-class Soja(var altura: Double, val anioSemilla: Int) {
-    fun espacio(): Double {
-        TODO("Lee un poco más el enunciado...")
+class Menta(altura: Double, anioObtencion: Int) : Planta(altura, anioObtencion) {
+
+    override fun daNuevasSemillas(): Boolean {
+        return super.daNuevasSemillas() || this.altura > 0.4
     }
 
-    fun daSemillas(): Boolean {
-        TODO("Dalee")
-    }
-
-    fun esFuerte(): Boolean {
-        TODO("Así me implementas mejor")
+    override fun espacio(): Double {
+        return this.altura + 1
     }
 }
 
-class Planta(var altura: Double, val anioSemilla: Int) {
-    fun espacio() {
-        TODO("Pasaron cosas")
+class Soja(altura: Double, anioObtencion: Int) : Planta(altura, anioObtencion) {
+
+    override var horasDeSolQueTolera = when {
+        this.altura  < 0.5 -> 6
+        this.altura in 0.5..1.0 -> 8
+        else -> 12
     }
 
+    override fun daNuevasSemillas(): Boolean {
+        return super.daNuevasSemillas() || (this.anioObtencion > 2007 && this.altura in 0.75..0.9)
+    }
+
+    override fun espacio(): Double {
+        return this.altura / 2
+    }
 }

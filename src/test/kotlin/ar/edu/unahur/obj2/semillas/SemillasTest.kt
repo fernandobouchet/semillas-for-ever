@@ -15,13 +15,13 @@ class SemillasTest : DescribeSpec ({
 
         it("probamos los atributos altura  y anioSemilla") {
             menta.altura.shouldBe(1.0)
-            menta.anioSemilla.shouldBe(2021)
+            menta.anioObtencion.shouldBe(2021)
         }
 
         it("verificar si da semillas") {
-            menta.daSemillas().shouldBeTrue()
-            mentita.daSemillas().shouldBeFalse()
-            soja.daSemillas().shouldBeFalse()
+            menta.daNuevasSemillas().shouldBeTrue()
+            mentita.daNuevasSemillas().shouldBeFalse()
+            soja.daNuevasSemillas().shouldBeFalse()
         }
 
         it("es fuerte") {
