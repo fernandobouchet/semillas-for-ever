@@ -44,9 +44,13 @@ open class Soja(altura: Double, anioObtencion: Int) : Planta(altura, anioObtenci
 
 }
 
-class Quinoa(altura: Double, anioObtencion: Int, var espacio: Double): Planta(altura, anioObtencion) {
+class Quinoa(altura: Double, anioObtencion: Int,open var espacio: Double): Planta(altura, anioObtencion) {
     override fun espacio(): Double {
         return espacio
+    }
+
+    override fun daNuevasSemillas(): Boolean {
+        return super.daNuevasSemillas() || this.anioObtencion in 2001..2008
     }
 
     override var horasDeSolQueTolera: Int = when {
