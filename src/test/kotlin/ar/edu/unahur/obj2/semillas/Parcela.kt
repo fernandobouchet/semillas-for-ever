@@ -1,6 +1,6 @@
 package ar.edu.unahur.obj2.semillas
 
-class Parcela(var ancho: Double, var largo: Double, var horasDeSol: Int, val plantas: MutableSet<Planta> = mutableSetOf<Planta>()) {
+class Parcela(var ancho: Double, var largo: Double, var horasDeSol: Int, var plantas: MutableList<Planta>) {
 
     fun superficie(): Double {
         return this.ancho * this.largo

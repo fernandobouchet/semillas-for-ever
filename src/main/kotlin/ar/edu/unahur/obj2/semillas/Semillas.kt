@@ -1,6 +1,6 @@
 package ar.edu.unahur.obj2.semillas
 
-abstract class Planta(open var altura: Double, open val anioObtencion: Int) {
+abstract class Planta(var altura: Double, open val anioObtencion: Int) {
 
     open var horasDeSolQueTolera = 7
 
@@ -44,7 +44,7 @@ open class Soja(altura: Double, anioObtencion: Int) : Planta(altura, anioObtenci
 
 }
 
-class Quinoa(altura: Double, anioObtencion: Int,open var espacio: Double): Planta(altura, anioObtencion) {
+open class Quinoa(altura: Double, anioObtencion: Int, var espacio: Double): Planta(altura, anioObtencion) {
     override fun espacio(): Double {
         return espacio
     }
