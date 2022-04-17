@@ -1,6 +1,6 @@
 package ar.edu.unahur.obj2.semillas
 
-class Parcela(var ancho: Double, var largo: Double, var horasDeSol: Int, var plantas: MutableList<Planta>) {
+class Parcela(var ancho: Double, var largo: Double, var horasDeSol: Int, val plantas: MutableSet<Planta> = mutableSetOf<Planta>()) {
 
     fun superficie(): Double {
         return this.ancho * this.largo
@@ -15,7 +15,7 @@ class Parcela(var ancho: Double, var largo: Double, var horasDeSol: Int, var pla
     fun tieneComplicaciones(): Boolean {
         return plantas.any {it.horasDeSolQueTolera < this.horasDeSol}
     }
-    fun agregarPlanta(Planta:Planta) {
+    fun agregarPlanta(Planta: Planta) {
         if (Planta.horasDeSolQueTolera + 2 >= this.horasDeSol) {
             throw Exception("No se puede plantar porque las horas de sol de la parcela son dos mas de las que tolera la planta")
         }
@@ -24,4 +24,5 @@ class Parcela(var ancho: Double, var largo: Double, var horasDeSol: Int, var pla
         }
         else plantas.add(Planta)
     }
+
 }

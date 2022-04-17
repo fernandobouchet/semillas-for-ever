@@ -1,5 +1,6 @@
 package ar.edu.unahur.obj2.semillas
 
+
 abstract class Planta(var altura: Double, open val anioObtencion: Int) {
 
     open var horasDeSolQueTolera = 7
@@ -13,6 +14,7 @@ abstract class Planta(var altura: Double, open val anioObtencion: Int) {
     }
 
     abstract fun espacio(): Double
+    abstract fun esParcelaIdeal(parcela: Parcela): Boolean
 }
 
 open class Menta(altura: Double, anioObtencion: Int) : Planta(altura, anioObtencion) {
@@ -23,6 +25,9 @@ open class Menta(altura: Double, anioObtencion: Int) : Planta(altura, anioObtenc
 
     override fun espacio(): Double {
         return this.altura + 1
+    }
+    override fun esParcelaIdeal(parcela: Parcela): Boolean {
+        return parcela.superficie() >= 6
     }
 }
 
@@ -41,7 +46,9 @@ open class Soja(altura: Double, anioObtencion: Int) : Planta(altura, anioObtenci
     override fun espacio(): Double {
         return this.altura / 2
     }
-
+    override fun esParcelaIdeal(parcela: Parcela): Boolean {
+        return parcela.horasDeSol == this.horasDeSolQueTolera
+    }
 }
 
 open class Quinoa(altura: Double, anioObtencion: Int, var espacio: Double): Planta(altura, anioObtencion) {
@@ -57,15 +64,24 @@ open class Quinoa(altura: Double, anioObtencion: Int, var espacio: Double): Plan
         this.espacio() < 0.3 -> 10
         else -> super.horasDeSolQueTolera
     }
+    override fun esParcelaIdeal(parcela: Parcela): Boolean {
+        return parcela.plantas.all{x -> x.altura <= 1.5}
+    }
 }
 
 class SojaTransgenica(altura: Double, anioObtencion: Int): Soja(altura, anioObtencion) {
     override fun daNuevasSemillas(): Boolean {
         return false
     }
+    override fun esParcelaIdeal(parcela: Parcela): Boolean {
+        return parcela.cantidadMaximaDePlantas() == 1.0
+    }
 }
 class Peperina(altura: Double, anioObtencion: Int): Menta(altura, anioObtencion) {
     override fun espacio(): Double {
         return super.espacio() * 2
+    }
+    override fun esParcelaIdeal(parcela: Parcela): Boolean {
+        return parcela.superficie() >= 6
     }
 }
