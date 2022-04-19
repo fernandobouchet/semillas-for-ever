@@ -65,7 +65,7 @@ open class Quinoa(altura: Double, anioObtencion: Int, var espacio: Double): Plan
         else -> super.horasDeSolQueTolera
     }
     override fun esParcelaIdeal(parcela: Parcela): Boolean {
-        return parcela.plantas.all{x -> x.altura <= 1.5}
+        return parcela.Plantas.all{planta -> planta.altura <= 1.5}
     }
 }
 
