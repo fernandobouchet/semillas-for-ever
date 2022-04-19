@@ -1,6 +1,6 @@
 package ar.edu.unahur.obj2.semillas
 
-class Parcela(var ancho: Double, var largo: Double, var horasDeSol: Int) {
+open class Parcela(var ancho: Double, var largo: Double, var horasDeSol: Int) {
 
     val Plantas: MutableSet<Planta> = mutableSetOf<Planta>()
 
@@ -27,4 +27,16 @@ class Parcela(var ancho: Double, var largo: Double, var horasDeSol: Int) {
         else Plantas.add(Planta)
     }
 
+}
+
+class ParcelaEcologica(ancho: Double, largo: Double, horasDeSol: Int) : Parcela(ancho, largo, horasDeSol) {
+    fun seAsociaBien(planta: Planta): Boolean {
+        return !this.tieneComplicaciones() && planta.esParcelaIdeal(this)
+    }
+}
+
+class ParcelaIndustrial(ancho: Double,largo: Double,horasDeSol: Int) : Parcela(ancho, largo, horasDeSol) {
+    fun seAsociaBien(planta: Planta): Boolean {
+        return this.Plantas.size <= 2 && planta.esFuerte()
+    }
 }

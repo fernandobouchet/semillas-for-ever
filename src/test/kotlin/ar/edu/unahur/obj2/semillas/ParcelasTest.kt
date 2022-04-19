@@ -75,4 +75,35 @@ class ParcelasTest : DescribeSpec ({
             sojaT1.esParcelaIdeal(parcela).shouldBeFalse()
         }
     }
+    describe("Test de Asociacion de plantas") {
+        it("Parcela ecológica se asocia bien al no tener complicaciones y ser ideal para la planta") {
+            val parcelaEco = ParcelaEcologica(3.0, 8.1, 7)
+            val menta = Menta(1.0, 2008)
+            parcelaEco.agregarPlanta(menta)
+            parcelaEco.tieneComplicaciones().shouldBeFalse()
+            parcelaEco.seAsociaBien(menta).shouldBeTrue()
+        }
+
+        it("Parcela industrial se asocia bien con una planta fuerte teniendo menos de 2 plantas") {
+            val parcelaInd = ParcelaIndustrial(3.0, 8.1, 7)
+            val soja = Soja(1.9, 2008)
+            soja.esFuerte().shouldBeTrue()
+            parcelaInd.agregarPlanta(soja)
+            parcelaInd.Plantas.size.shouldBe(1)
+            parcelaInd.seAsociaBien(soja).shouldBeTrue()
+        }
+        it("Parcela industrial no se asocia bien con una planta fuerte teniendo más de 2 plantas") {
+            val parcelaInd = ParcelaIndustrial(3.0, 8.1, 7)
+            val soja1 = Soja(1.9, 2008)
+            val soja2 = Soja(3.9, 2010)
+            val soja3 = Soja(1.0, 2020)
+
+            soja1.esFuerte().shouldBeTrue()
+            parcelaInd.agregarPlanta(soja1)
+            parcelaInd.agregarPlanta(soja2)
+            parcelaInd.agregarPlanta(soja3)
+            parcelaInd.Plantas.size.shouldBe(3)
+            parcelaInd.seAsociaBien(soja1).shouldBeFalse()
+        }
+    }
 })
