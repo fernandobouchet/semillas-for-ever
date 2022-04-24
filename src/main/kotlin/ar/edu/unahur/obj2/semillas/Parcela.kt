@@ -26,17 +26,25 @@ open class Parcela(var ancho: Double, var largo: Double, var horasDeSol: Int) {
         }
         else Plantas.add(Planta)
     }
-
+    fun cantidadDePlantasEnParcela(): Int {
+        return Plantas.size
+    }
+    open fun seAsociaBien(planta: Planta): Boolean{
+        throw Exception("No se puede calcular porque es una parcela normal")
+    }
+    fun porcentajeDeBienAsociadas() : Double {
+        return (Plantas.filter { this.seAsociaBien(it) }.size * Plantas.size / 100).toDouble()
+    }
 }
 
 class ParcelaEcologica(ancho: Double, largo: Double, horasDeSol: Int) : Parcela(ancho, largo, horasDeSol) {
-    fun seAsociaBien(planta: Planta): Boolean {
+    override fun seAsociaBien(planta: Planta): Boolean {
         return !this.tieneComplicaciones() && planta.esParcelaIdeal(this)
     }
 }
 
 class ParcelaIndustrial(ancho: Double,largo: Double,horasDeSol: Int) : Parcela(ancho, largo, horasDeSol) {
-    fun seAsociaBien(planta: Planta): Boolean {
+    override fun seAsociaBien(planta: Planta): Boolean {
         return this.Plantas.size <= 2 && planta.esFuerte()
     }
 }
